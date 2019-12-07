@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+#testAutoCorrect
+#Run Lint, Run Test
+#
+set -e
+#set -x
+
+usage() {
+  echo "Warning File required"
+}
+
+if [ $# -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+swiftlint lint --strict --reporter emoji --config .swiftlint.yml > $1
+
+python AutoCorrect.py $1
