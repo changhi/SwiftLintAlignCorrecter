@@ -1,4 +1,4 @@
-/Users/Daniel/apps/SwiftLintAlignCorrecter/LintTest.swift
+/Users/Daniel/apps/SwiftLintAlignCorrecter/tests/LintTest.swift
 ⛔️ Line 9: Variable name should be between 3 and 40 characters long: 'p'
 ⚠️ Line 13: Function parameters should be aligned vertically if they're in multiple lines in a method call.
 ⚠️ Line 12: Function parameters should be aligned vertically if they're in multiple lines in a method call.

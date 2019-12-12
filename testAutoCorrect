@@ -3,8 +3,9 @@
 #testAutoCorrect
 #Run Lint, Run Test
 #
-set -e
+#set -e
 #set -x
+
 
 usage() {
   echo "Warning File required"
@@ -17,4 +18,6 @@ fi
 
 swiftlint lint --strict --reporter emoji --config .swiftlint.yml > $1
 
-python AutoCorrect.py $1
+python AutoLint/AutoCorrect.py $1
+
+echo "done"

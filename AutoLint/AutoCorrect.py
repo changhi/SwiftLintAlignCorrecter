@@ -13,8 +13,10 @@ def correctAlignment(warnFilePath):
                 print(line)
                 correctFile(line.rstrip(), warningLines)
                 warningLines = []
+
             elif getWarning(line) == alignmentError:
                 warningLines.append(getLineNumber(line))
+
         warnFile.close()
 
     except Exception as e:
@@ -24,10 +26,16 @@ def correctAlignment(warnFilePath):
 def correctFile(filePath, warningLines):
     try:
         correctedCopy = open(getFileCopyPath(filePath), "w+")
+        previousLine = None
         with open(filePath) as fileToCorrect:
-            for num, line in enumerate(fileToCorrect):
-                if i == 
-                correctedCopy.write(line)
+            for num, line in enumerate(fileToCorrect, start=1):
+                if num in warningLines:
+                    newLine = correctLine(previousLine, line)
+                    previousLine = newLine
+                    correctedCopy.write(str(newLine))
+                else:
+                    previousLine = line
+                    correctedCopy.write(line)
 
         correctedCopy.close()
 
@@ -45,9 +53,16 @@ def getLineNumber(line):
 
 def getFileCopyPath(orignalFile):
     newFile = orignalFile.split("/")
-    newFile = newFile.split(".")
+    newFile = newFile[-1].split(".")
     newName = os.path.dirname(orignalFile) + "/" + newFile[0] + "_copy." + newFile[1]
     return newName
+
+
+def correctLine(previousLine, currLine):
+    if "(" in previousLine:
+        numSpacesNeeded = previousLine.index("(") + 1
+        print(numSpacesNeeded)
+        return (" " * numSpacesNeeded) + currLine.strip(" ")
 
 
 def main():
