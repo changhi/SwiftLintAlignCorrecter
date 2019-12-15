@@ -20,7 +20,7 @@ badAlignFunc(s1: str1,
              s3: str3)
 
 
-badAlignFunc(s1: str1,
-             s2: returnStrings(str2,
-                               str3),
-        s3: ""))
+//badAlignFunc(s1: str1,
+        //s2: returnStrings(str2,
+        //str3),
+        //s3: ""))

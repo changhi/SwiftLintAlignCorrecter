@@ -10,7 +10,6 @@ def correctAlignment(warnFilePath):
         warningLines = []
         for line in reversed(warnFile.readlines()):
             if line[0] == "/":
-                print(line)
                 correctFile(line.rstrip(), warningLines)
                 warningLines = []
 
@@ -26,15 +25,14 @@ def correctAlignment(warnFilePath):
 def correctFile(filePath, warningLines):
     try:
         correctedCopy = open(getFileCopyPath(filePath), "w+")
-        previousLine = None
         with open(filePath) as fileToCorrect:
-            for num, line in enumerate(fileToCorrect, start=1):
+            lines = fileToCorrect.readlines()
+            for num, line in enumerate(lines):
                 if num in warningLines:
-                    newLine = correctLine(previousLine, line)
-                    previousLine = newLine
+                    newLine = correctLine(num, lines)
+                    lines[num] = newLine # override old line
                     correctedCopy.write(str(newLine))
                 else:
-                    previousLine = line
                     correctedCopy.write(line)
 
         correctedCopy.close()
@@ -48,7 +46,8 @@ def getWarning(line):
 
 
 def getLineNumber(line):
-    return int(line.split(":")[0].split("Line ")[1])
+    """Return line line number minus 1 to account for indexing at 0."""
+    return int(line.split(":")[0].split("Line ")[1]) - 1
 
 
 def getFileCopyPath(orignalFile):
@@ -58,15 +57,17 @@ def getFileCopyPath(orignalFile):
     return newName
 
 
-def correctLine(previousLine, currLine):
-    if "(" in previousLine:
-        print(currLine)
-        numSpacesNeeded = previousLine.index("(") + 1
-    else:
-        numSpacesNeeded = len(previousLine) - len(previousLine.lstrip())
-    print(numSpacesNeeded)
-    return (" " * numSpacesNeeded) + currLine.strip(" ")
+def correctLine(current, lines):
+    try:
+        previousLine = lines[current - 1]
+        if "(" in previousLine:
+            numSpacesNeeded = previousLine.index("(") + 1
+        else:
+            numSpacesNeeded = len(previousLine) - len(previousLine.lstrip())
+        return (" " * numSpacesNeeded) + lines[current].strip(" ")
 
+    except Exception as e:
+        print(str(e) + " in main()")
 
 def main():
     try:
