@@ -60,9 +60,12 @@ def getFileCopyPath(orignalFile):
 
 def correctLine(previousLine, currLine):
     if "(" in previousLine:
+        print(currLine)
         numSpacesNeeded = previousLine.index("(") + 1
-        print(numSpacesNeeded)
-        return (" " * numSpacesNeeded) + currLine.strip(" ")
+    else:
+        numSpacesNeeded = len(previousLine) - len(previousLine.lstrip())
+    print(numSpacesNeeded)
+    return (" " * numSpacesNeeded) + currLine.strip(" ")
 
 
 def main():
