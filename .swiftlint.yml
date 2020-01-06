@@ -1,5 +1,6 @@
 included:
   - tests/LintTest.swift
+  - tests/LintTest_copy.swift
 excluded:
   - Tests/SwiftLintFrameworkTests/Resources
 analyzer_rules:

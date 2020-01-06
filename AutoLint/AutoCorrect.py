@@ -1,6 +1,5 @@
 import sys
 import os
-from os import path
 
 
 def correctAlignment(warnFilePath):
@@ -30,7 +29,7 @@ def correctFile(filePath, warningLines):
             for num, line in enumerate(lines):
                 if num in warningLines:
                     newLine = correctLine(num, lines)
-                    lines[num] = newLine # override old line
+                    lines[num] = newLine  # override old line
                     correctedCopy.write(str(newLine))
                 else:
                     correctedCopy.write(line)
@@ -69,13 +68,14 @@ def correctLine(current, lines):
     except Exception as e:
         print(str(e) + " in main()")
 
+
 def main():
     try:
         warnFilePath = sys.argv[1]
         correctAlignment(warnFilePath)
     except Exception as e:
             print(str(e) + " in main()")
-    print("\n******* reached end **********")
+    print("\n******* Finished Correcting Files **********")
 
 
 if __name__ == '__main__':

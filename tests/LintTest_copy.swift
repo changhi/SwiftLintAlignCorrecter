@@ -10,7 +10,7 @@ func badAlignFunc(s1: String, s2: String, s3: String) {
 
 func returnStrings(str: String, str1: String) -> String {
     print(str + str1)
-    return 
+    return
 }
 
 var p = 0
@@ -19,8 +19,7 @@ badAlignFunc(s1: str1,
              s2: str2,
              s3: str3)
 
-
-//badAlignFunc(s1: str1,
-        //s2: returnStrings(str2,
-        //str3),
-        //s3: ""))
+badAlignFunc(s1: str1,
+             s2: returnStrings(str2,
+                               str3),
+    s3: ""))
