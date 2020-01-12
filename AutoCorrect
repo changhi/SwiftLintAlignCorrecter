@@ -8,10 +8,10 @@
 
 
 usage() {
-  echo "Warning File required"
+  echo "(|help)"
 }
 
-if [ $# -lt 2 ]; then
+if [ $# -ne 1 ]; then
   usage
   exit 1
 fi
@@ -27,9 +27,15 @@ case $1 in
 
 	python AutoLint/AutoCorrect.py error.txt
 	;;
-*)
+
+  "help")
+      cat AutoLint/help.txt
+  ;;
+
+  *)
+    usage
     exit 1
     ;;
 esac
 
-echo done
+echo "AutoLint complete"
