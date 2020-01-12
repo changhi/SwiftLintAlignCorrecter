@@ -27,7 +27,12 @@ case $1 in
 
 	python AutoLint/AutoCorrect.py error.txt
 	;;
-*)
+
+  "help")
+  
+  ;;
+
+  *)
     exit 1
     ;;
 esac
