@@ -3,8 +3,10 @@ import os
 
 
 def safeMode():
-    if sys.argv[-1] == "--safe" or "-s":
+    print(sys.argv[-1])
+    if sys.argv[-1] == "--safe" or sys.argv[-1] == "-s":
         return True
+    print("false")
     return False
 
 
@@ -30,17 +32,23 @@ def correctAlignment(warnFilePath):
 
 def correctFile(filePath, warningLines):
     try:
-        correctedCopy = open(getFileCopyPath(filePath), "w+")
+        correctedCopy = []
         with open(filePath) as fileToCorrect:
             lines = fileToCorrect.readlines()
             for num, line in enumerate(lines):
                 if num in warningLines:
                     newLine = correctLine(num, lines)
                     lines[num] = newLine  # override old line
-                    correctedCopy.write(str(newLine))
+                    correctedCopy.append(str(newLine))
                 else:
-                    correctedCopy.write(line)
-        correctedCopy.close()
+                    correctedCopy.append(line)
+
+            if safeMode:  # Remove original file
+                os.remove(filePath)
+            copyFile = open(getFilePath(filePath), "w+")
+            for line in correctedCopy:
+                copyFile.write(line)
+            copyFile.close()
 
     except Exception as e:
         print(str(e) + "in correctFile")
@@ -55,11 +63,14 @@ def getLineNumber(line):
     return int(line.split(":")[0].split("Line ")[1]) - 1
 
 
-def getFileCopyPath(orignalFile):
+def getFilePath(orignalFile):
     newFile = orignalFile.split("/")
     newFile = newFile[-1].split(".")
+    copy = "_copy."
+    if safeMode():
+        copy = "."
     newName = (os.path.dirname(orignalFile) + "/" +
-               newFile[0] + "_copy." + newFile[1])
+               newFile[0] + copy + newFile[1])
     return newName
 
 
@@ -78,6 +89,7 @@ def correctLine(current, lines):
 
 def main():
     try:
+        warnFilePath = sys.argv[1]
         correctAlignment(warnFilePath)
         print(sys.argv[-1])
 
