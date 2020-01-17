@@ -1,11 +1,14 @@
 import sys
 import os
 
+SAFEMODE = False
 
 def correctAlignment(warnFilePath):
     try:
+        print(SAFEMODE)
         warnFile = open(warnFilePath, "r")
-        alignmentError = "Function parameters should be aligned vertically if they're in multiple lines in a method call."
+        alignmentError = ("Function parameters should be aligned vertically " +
+                          "if they're in multiple lines in a method call.")
         warningLines = []
         for line in reversed(warnFile.readlines()):
             if line[0] == "/":
@@ -33,7 +36,6 @@ def correctFile(filePath, warningLines):
                     correctedCopy.write(str(newLine))
                 else:
                     correctedCopy.write(line)
-
         correctedCopy.close()
 
     except Exception as e:
@@ -52,7 +54,8 @@ def getLineNumber(line):
 def getFileCopyPath(orignalFile):
     newFile = orignalFile.split("/")
     newFile = newFile[-1].split(".")
-    newName = os.path.dirname(orignalFile) + "/" + newFile[0] + "_copy." + newFile[1]
+    newName = (os.path.dirname(orignalFile) + "/" +
+               newFile[0] + "_copy." + newFile[1])
     return newName
 
 
@@ -71,10 +74,12 @@ def correctLine(current, lines):
 
 def main():
     try:
+        if sys.argv[-1] == "--safe" or "-s":
+            SAFEMODE = True
         warnFilePath = sys.argv[1]
         correctAlignment(warnFilePath)
     except Exception as e:
-            print(str(e) + " in main()")
+            print(str(e))
     print("\n******* Finished Correcting Files **********")
 
 

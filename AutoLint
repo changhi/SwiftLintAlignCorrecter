@@ -23,9 +23,10 @@ case $1 in
   		echo "Path Required"
   		exit 1
 	fi
-	swiftlint lint --strict --reporter emoji --config .swiftlint.yml --path $2 > error.txt
 
-	python AutoLint/AutoCorrect.py error.txt
+	swiftlint lint --strict --reporter emoji --config .swiftlint.yml --path $2 > error.txt
+	python AutoLintFiles/AutoCorrect.py error.txt
+  rm error.txt
 	;;
 
   "help")
