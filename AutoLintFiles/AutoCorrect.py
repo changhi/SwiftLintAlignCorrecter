@@ -1,11 +1,15 @@
 import sys
 import os
 
-SAFEMODE = False
+
+def safeMode():
+    if sys.argv[-1] == "--safe" or "-s":
+        return True
+    return False
+
 
 def correctAlignment(warnFilePath):
     try:
-        print(SAFEMODE)
         warnFile = open(warnFilePath, "r")
         alignmentError = ("Function parameters should be aligned vertically " +
                           "if they're in multiple lines in a method call.")
@@ -74,12 +78,12 @@ def correctLine(current, lines):
 
 def main():
     try:
-        if sys.argv[-1] == "--safe" or "-s":
-            SAFEMODE = True
-        warnFilePath = sys.argv[1]
         correctAlignment(warnFilePath)
+        print(sys.argv[-1])
+
     except Exception as e:
             print(str(e))
+
     print("\n******* Finished Correcting Files **********")
 
 
