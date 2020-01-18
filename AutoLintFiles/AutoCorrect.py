@@ -3,10 +3,9 @@ import os
 
 
 def safeMode():
-    print(sys.argv[-1])
+    """Return if safeMode is enabled."""
     if sys.argv[-1] == "--safe" or sys.argv[-1] == "-s":
         return True
-    print("false")
     return False
 
 
@@ -59,44 +58,40 @@ def getWarning(line):
 
 
 def getLineNumber(line):
-    """Return line line number minus 1 to account for indexing at 0."""
+    """Return line number minus 1 to account for indexing at 0."""
     return int(line.split(":")[0].split("Line ")[1]) - 1
 
 
 def getFilePath(orignalFile):
     newFile = orignalFile.split("/")
     newFile = newFile[-1].split(".")
-    copy = "_copy."
+    copy = "."
     if safeMode():
-        copy = "."
+        copy = "_copy."
     newName = (os.path.dirname(orignalFile) + "/" +
                newFile[0] + copy + newFile[1])
     return newName
 
 
 def correctLine(current, lines):
-    try:
-        previousLine = lines[current - 1]
-        if "(" in previousLine:
-            numSpacesNeeded = previousLine.index("(") + 1
-        else:
-            numSpacesNeeded = len(previousLine) - len(previousLine.lstrip())
-        return (" " * numSpacesNeeded) + lines[current].strip(" ")
-
-    except Exception as e:
-        print(str(e) + " in main()")
+    """Return corrected line based off current."""
+    previousLine = lines[current - 1]
+    if "(" in previousLine:
+        numSpacesNeeded = previousLine.index("(") + 1
+    else:
+        numSpacesNeeded = len(previousLine) - len(previousLine.lstrip())
+    return (" " * numSpacesNeeded) + lines[current].strip(" ")
 
 
 def main():
     try:
         warnFilePath = sys.argv[1]
         correctAlignment(warnFilePath)
-        print(sys.argv[-1])
 
     except Exception as e:
             print(str(e))
 
-    print("\n******* Finished Correcting Files **********")
+    print("\n***** Finished Correcting Files *****\n")
 
 
 if __name__ == '__main__':

@@ -23,14 +23,23 @@ case $1 in
   		echo "Path Required"
   		exit 1
 	fi
-  echo $3
 	swiftlint lint --strict --reporter emoji --config .swiftlint.yml --path $2 > error.txt
 	python AutoLintFiles/AutoCorrect.py error.txt $3
-  rm error.txt
+    rm error.txt
 	;;
 
   "help")
       cat AutoLint/help.txt
+  ;;
+
+  "test")
+      echo "***** Running AutoLint Tests *****"
+      mkdir AutoLintFiles/test_env
+      cp -r AutoLintFiles/tests AutoLintFiles/test_env
+      ./AutoLint correct AutoLintFiles/test_env/tests
+      swiftlint lint --strict --reporter emoji --config .swiftlint.yml --path AutoLintFiles/test_env/tests > AutoLintFiles/test_env/error.txt
+      python AutoLintFiles/AutoLintTest.py AutoLintFiles/test_env/error.txt
+      #rm -r AutoLintFiles/test_env
   ;;
 
   *)
