@@ -22,7 +22,7 @@ https://docs.python.org/3/installing/index.html
 
 Pull project into the same folder as project that you intend to correct.
 
-Then run  ``` ./AutoLint correct Path ```
+Then run  ```./AutoLint correct Path```
 
 Run with ```-s```  or  ```--safe```  to create copies of corrected file instead of replaceing original
 files with corrected files.
