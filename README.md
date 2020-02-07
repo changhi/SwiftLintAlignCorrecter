@@ -1,4 +1,4 @@
-# SwuftLintAlignCorrect
+# SwiftLintAlignCorrect
 
 Bash/Python Script that runs SwiftLint then corrects all vertical Alignment errors.
 
